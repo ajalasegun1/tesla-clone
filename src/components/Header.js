@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { selectCars } from "../features/car/carSlice";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [burgerOpen, setBurgerOpen] = useState(false);
-
+  const cars = useSelector(selectCars);
   return (
     <Container>
       <a>
         <img src="/images/logo.svg" alt="logo" />
       </a>
       <Menu>
-        <p>
+        {cars &&
+          cars.map((car, i) => {
+            return (
+              <p key={i}>
+                <a href="#">{car}</a>
+              </p>
+            );
+          })}
+        {/* <p>
           <a href="#">Model S</a>
         </p>
         <p>
@@ -23,7 +33,7 @@ function Header() {
         </p>
         <p>
           <a href="#">Model X</a>
-        </p>
+        </p> */}
       </Menu>
       <RightMenu>
         <a href="#">Shop</a>
@@ -34,7 +44,14 @@ function Header() {
         <CloseWrapper>
           <CustomClose onClick={() => setBurgerOpen(false)} />
         </CloseWrapper>
-
+        {cars &&
+          cars.map((car, i) => {
+            return (
+              <li key={i}>
+                <a href="#">{car}</a>
+              </li>
+            );
+          })}
         <li>
           <a href="#">Existing Inventory</a>
         </li>
